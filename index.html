@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ski Coach · 滑雪教练</title>
+<meta name="description" content="A ski coach that runs in your browser: on-device pose analysis of your ski video, a drill plan and a carving physics lab. 浏览器里的滑雪教练：本机姿态分析、训练计划与卡宾实验室。">
+<meta name="theme-color" content="#f3f6f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#08111a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="./" aria-label="Ski Coach">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M4.5 23.5 12.6 9.8l4 6.2 2.9-4.2 8 11.7z" fill="#fff"/><path d="M12.6 9.8l2.3 3.6-2.3 1.5-2.1-1.6z" fill="var(--accent)" opacity=".55"/></svg>
+      <span data-i18n="brand">Ski Coach</span>
+    </a>
+    <nav class="tabs" aria-label="Sections">
+      <button data-act="tab" data-tab="analyze"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M10 8.5v7l6-3.5z"/></svg><span data-i18n="tab.analyze">Analyse</span></button>
+      <button data-act="tab" data-tab="plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L7 5M3.5 12l1.2 1.2L7 11M3.5 18l1.2 1.2L7 17"/></svg><span data-i18n="tab.plan">Plan</span></button>
+      <button data-act="tab" data-tab="lab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20c4-1 5-6 9-8s5-7 9-8"/><circle cx="12" cy="12" r="2"/></svg><span data-i18n="tab.lab">Lab</span></button>
+      <button data-act="tab" data-tab="log"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span data-i18n="tab.log">Log</span></button>
+    </nav>
+    <div class="lang" role="group" aria-label="Language / 语言">
+      <button data-act="lang" data-lang="en">EN</button><button data-act="lang" data-lang="zh">中文</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="tab-analyze" class="tab">
+    <div class="hero">
+      <h1 data-i18n="hero.title"></h1>
+      <p data-i18n="hero.sub"></p>
+    </div>
+    <div class="analyze-grid">
+      <div class="col-stage">
+        <div class="seg" role="group">
+          <button data-act="source" data-source="demo" data-i18n="src.demo"></button>
+          <button data-act="source" data-source="video" data-i18n="src.video"></button>
+        </div>
+        <div class="stage" id="stage-wrap">
+          <canvas id="stage"></canvas>
+          <video id="video" playsinline muted loop preload="auto"></video>
+          <div class="hud" id="hud"></div>
+          <div class="stage-ctl" id="stage-ctl"></div>
+          <div class="overlay" id="overlay" hidden></div>
+        </div>
+        <div class="timeline" id="timeline"></div>
+        <div class="controls" id="controls"></div>
+      </div>
+      <div class="col-report" id="report" aria-live="polite"></div>
+    </div>
+  </section>
+  <section id="tab-plan" class="tab" hidden></section>
+  <section id="tab-lab" class="tab" hidden></section>
+  <section id="tab-log" class="tab" hidden></section>
+</main>
+
+<footer class="foot">
+  <span data-i18n="footer.local"></span>
+  <a href="https://github.com/clarajzt/ski-coach" data-i18n="footer.source" rel="noopener"></a>
+</footer>
+
+<input type="file" id="file" accept="video/*" hidden>
+<input type="file" id="import-file" accept="application/json,.json" hidden>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
