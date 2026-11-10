@@ -179,6 +179,7 @@ function renderReport() {
 
   el.innerHTML = `
     ${r.lowTrack ? `<p class="banner">${t('report.lowTrack', { pct: Math.round(r.validRatio * 100) })}</p>` : ''}
+    ${r.small ? `<p class="banner">${t('report.small', { pct: Math.round(r.size * 140) })}</p>` : ''}
     <div class="card summary">
       ${ringSVG(r.overall)}
       <div class="summary-txt">

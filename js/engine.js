@@ -93,6 +93,9 @@ export function frameMetrics(frame) {
   let flip = 1;
   if (dot(F, hint) < -0.02) { flip = -1; F = mul(F, -1); L = mul(L, -1); }
 
+  // how much of the frame the skier fills (shoulders→ankles, in frame heights; assumes ~16:9)
+  const s2 = { x: (lm[11].x + lm[12].x) / 2, y: (lm[11].y + lm[12].y) / 2 }, a2 = { x: (lm[27].x + lm[28].x) / 2, y: (lm[27].y + lm[28].y) / 2 };
+  out.size = Math.hypot((s2.x - a2.x) * 1.6, s2.y - a2.y);
   out.latConf = Math.abs(L.x);   // 1 = filmed from the front / behind
   out.sagConf = Math.abs(L.z);   // 1 = filmed from the side
   out.toward = F.z < 0;          // skier faces the camera
@@ -220,8 +223,11 @@ export function analyze(frames) {
     return { ok: false, reason: 'no_skier', duration, frames: frames.length, validRatio };
   }
   const lowTrack = validRatio < 0.7;
+  // A skier only a few dozen pixels tall gives the pose model very little to work with.
+  const size = median(m.map((f) => f.size));
+  const small = size < 0.15;
   const down = { high: 'med', med: 'low', low: 'low' };
-  const q = (c) => (lowTrack ? down[c] : c);
+  const q = (c) => (lowTrack || small ? down[c] : c);
 
   const t = m.map((f) => f.t);
   const fps = (m.length - 1) / (t[t.length - 1] - t[0]);
@@ -403,7 +409,7 @@ export function analyze(frames) {
     .sort((a, b) => dims[b].score - dims[a].score).slice(0, 3);
 
   return {
-    ok: true, duration, frames: frames.length, validRatio, lowTrack, fps,
+    ok: true, duration, frames: frames.length, validRatio, lowTrack, small, size, fps,
     view, latConf, sagConf, series, turns: seen, metrics: M, dims, overall, level,
     findings, strengths, perFrame: all,
   };

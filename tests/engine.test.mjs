@@ -125,3 +125,12 @@ test('a panning camera: lean comes from the front-on half, fore-aft from the sid
   assert.notEqual(r.findings[0].conf, 'low');
   assert.ok(r.turns.every((tu) => tu.t1 <= shift + 0.01), 'no turns invented from side-on frames');
 });
+
+test('a skier who is tiny in the frame is scored with lowered confidence', () => {
+  const frames = simulate(buildParams('carving'), { noise: 0.008 });
+  const tiny = frames.map((f) => ({ ...f, lm: f.lm.map((q) => ({ ...q, x: 0.5 + (q.x - 0.5) * 0.25, y: 0.5 + (q.y - 0.5) * 0.25 })) }));
+  const r = analyze(tiny);
+  assert.ok(r.ok && r.small);
+  assert.equal(r.dims.edge.conf, 'med');
+  assert.equal(analyze(frames).small, false);
+});

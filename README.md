@@ -46,7 +46,7 @@ The procedural skier doubles as a test rig: it commits a known fault and the eng
 npm test
 ```
 
-34 tests cover fault detection for every modelled fault, level ordering, turn detection and timing, camera-view gating, left/right robustness (rear view, swapped skeleton), tracking drop-outs, the carving physics, EN/ZH string parity and drill-plan construction.
+35 tests cover fault detection for every modelled fault, level ordering, turn detection and timing, camera-view gating, left/right robustness (rear view, swapped skeleton), tracking drop-outs, the carving physics, EN/ZH string parity and drill-plan construction.
 
 ## Run locally · 本地运行
 
